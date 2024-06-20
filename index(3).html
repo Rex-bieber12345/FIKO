@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .contain {
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input[type="text"],
+        input[type="int."],
+        input[type="email"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        .Log1 {
+            width: 50%;
+            padding: 8px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .Log {
+            width: 50%;
+            padding: 8px;
+            background-color: Red;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            direction: rtl;
+            transition: 5s ease;
+        }
+
+        .Log:hover {
+
+            background: color #0f0;
+        }
+
+        .Log1:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="contain" id="contain">
+        <h1>Sign Up</h1>
+        <form action="Yo bieber.html" action="Form.php" method="POST" autocomplete="off" autocapitalize="on">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password">Password:</label>
+            <input type="int." id="password" name="password" required>
+
+            <label for="email">Email:</label>
+            <input type="email" name="email" id="password" required>
+
+            <button type="submit" id="register" class="Log1">Sign-up</button>
+            <br>
+            <button type="submit" id="login" class="Log">log-in</button>
+
+        </form>
+    </div>
+
+    <div class="dav" dir="rtl" autocapitalize="true" aria-required="true">
+        <p>Already have an account? <a href="xx.html">Sign In</a>
+        </p>
+    </div>
+
+</body>
+
+<script>
+    // script.js
+    document.addEventListener('DOMContentLoaded', () => {
+        let currentUser = null;
+
+        const authDiv = document.getElementById('auth');
+
+        document.getElementById('register').addEventListener('click', () => {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            if (username && password) {
+                const users = JSON.parse(localStorage.getItem('users')) || [];
+                if (users.find(user => user.username === username)) {
+                    alert('Username already exists.');
+                } else {
+                    users.push({ username, password });
+                    localStorage.setItem('users', JSON.stringify(users));
+                    alert('User registered successfully.');
+                }
+            }
+        });
+
+        document.getElementById('login').addEventListener('click', () => {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            const user = users.find(user => user.username === username && user.password === password);
+            if (user) {
+                currentUser = user;
+                authDiv.style.display = 'none';
+                chatForm.style.display = 'block';
+                audioForm.style.display = 'block';
+                loadMessages();
+            } else {
+                alert('Invalid username or password.');
+            }
+        });
+
+        chatForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            if (messageInput.value) {
+                const messages = JSON.parse(localStorage.getItem('messages')) || [];
+                messages.push({ sender: currentUser.username, content: messageInput.value, type: 'text', timestamp: new Date() });
+                localStorage.setItem('messages', JSON.stringify(messages));
+                messageInput.value = '';
+                loadMessages();
+            }
+        });
+
+        audioForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            if (audioInput.files.length > 0) {
+                const file = audioInput.files[0];
+                const reader = new FileReader();
+                reader.onload = function (event) {
+                    const messages = JSON.parse(localStorage.getItem('messages')) || [];
+                    messages.push({ sender: currentUser.username, content: event.target.result, type: 'audio', timestamp: new Date() });
+                    localStorage.setItem('messages', JSON.stringify(messages));
+                    audioInput.value = '';
+                    loadMessages();
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        function loadMessages() {
+            messagesList.innerHTML = '';
+            const messages = JSON.parse(localStorage.getItem('messages')) || [];
+            messages.forEach(msg => {
+                const item = document.createElement('li');
+                if (msg.type === 'text') {
+                    item.textContent = `${msg.sender}: ${msg.content}`;
+                } else if (msg.type === 'audio') {
+                    const audio = document.createElement('audio');
+                    audio.src = msg.content;
+                    audio.controls = true;
+                    item.classList.add('audio');
+                    item.textContent = `${msg.sender}: `;
+                    item.appendChild(audio);
+                }
+                messagesList.appendChild(item);
+            });
+        }
+    });
+
+
+</script>
+
+</html>
