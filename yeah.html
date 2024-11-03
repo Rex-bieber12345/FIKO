@@ -1,48 +1,53 @@
 <!DOCTYPE html>
-<meta charset="UTF-8">
-<link rel="icon" href="">
-
+<html lang="en">
 <head>
-    <title>Riddles</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beat it</title>
+<style>
+    body{
+        font-family: Georgia, 'Times New Roman', Times, ;
+    }
+
+</style>
+
 </head>
-<html>
-
-
 <body>
-    <h1>Answer the following riddles.</h1>
 
-    <form>
-        <P>What does a house wear?</P>
-        <input type="radio" name="colors" id="red">Address<br>
-        <input type="radio" name="colors" id="blue">Paint <br>
-        <input type="button" value="uncheck" id="red" onclick="uncheck()">
-
-        <p>A plane got an accident at the border of U.S.A and Canada, where are they going to burry the survivers ?</p>
-        <input type="radio" name="answer" required id="answer">U.S.A<br>
-        <input type="radio" name="answer" id="red">Canada<br>
-        <input type="radio" name="answer" id="read">They are not going to be
-        burried<br>
-        <input type="button" onclick="uncheck()" value="Uncheck" id="Uncheck">
-
-    </form>
+    <p>Cart Quantity: <span class="js-value-content"></span></p>
 
 
-
-    <script>
-        function userInput() {
-            document.getElementById("read").ask = arguments
-
-        }
-
-        function check() {
-            document.getElementById("red").checked = true;
-        }
-        function uncheck() {
-            document.getElementById("red").checked = false;
-        }
-
-    </script>
+    <button onclick="DisplayCart();">Show cart quantity</button>
+    <button onclick="Add1ToCart();">+1</button>
+    <button onclick="Add2ToCart();">+2</button>
+    <button onclick="Add3ToCart();">+3</button>
+    <button onclick="ResetCart();">Reset Cart</button>
 
 </body>
 
-</html>
+<script>
+let cartQuantity = 0;
+
+    function DisplayCart(){ 
+    document.querySelector(`.js-value-content`).innerText=` ${cartQuantity}` 
+    }
+
+    function Add1ToCart(){  cartQuantity++
+        document.querySelector(`.js=value-content`).innerHTML=`${cartQuantity}`
+            }
+
+    function Add2ToCart(){ cartQuantity+=2
+    document.querySelector(`.js=value-content`).innerHTML=`${cartQuantity}`   
+    }
+
+    function Add3ToCart(){ cartQuantity+=3
+    document.querySelector(`.js=fvalue-content`).innerHTML=`${cartQuantity}`   
+    }
+
+    function ResetCart(){cartQuantity=0;
+        document.querySelector(`.js-value-content`).innerHTML=` ${cartQuantity} `   
+
+    }
+     </script>
+
+</html
